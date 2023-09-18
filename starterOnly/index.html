@@ -60,21 +60,24 @@
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validate();"
+              onsubmit="return validateForm();"
             >
               <div
-                class="formData">
+                class="formData first"
+                data-error="Vous devez entrer 2 caractères ou plus." 
+                data-error-visible="false">
                 <label>Prénom</label><br>
                 <input
                   class="text-control"
                   type="text"
                   id="first"
                   name="first"
-                  minlength="2"
                 /><br>
               </div>
               <div
-                class="formData">
+                class="formData last"
+                data-error="Vous devez entrer 2 caractères ou plus." 
+                data-error-visible="false">
                 <label>Nom</label><br>
                 <input
                   class="text-control"
@@ -84,7 +87,9 @@
                 /><br>
               </div>
               <div
-                class="formData">
+                class="formData email"
+                data-error="Vous devez entrer une adresse email valide." 
+                data-error-visible="false">
                 <label>E-mail</label><br>
                 <input
                   class="text-control"
@@ -94,7 +99,9 @@
                 /><br>
               </div>
               <div
-                class="formData">
+                class="formData birthdate"
+                data-error="Vous devez entrer une date de naissance valide" 
+                data-error-visible="false">
                 <label>Date de naissance</label><br>
                 <input
                   class="text-control"
