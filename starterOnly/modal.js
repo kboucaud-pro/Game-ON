@@ -20,14 +20,19 @@ const page = {
   lastNameFormField: document.querySelector(".last"),
   emailFormField: document.querySelector(".email"),
   birthdateFormField: document.querySelector(".birthdate"),
+  quantityField: document.querySelector(".quantity"),
+  locationField: document.querySelector(".location"),
+  conditionField: document.querySelector(".user-condition"),
 
   //Form inputs
   firstNameInput: document.getElementById("first"),
   lastNameInput: document.getElementById("last"),
   emailInput: document.getElementById("email"),
-  birthdateInput: document.getElementById("birthdate")
+  birthdateInput: document.getElementById("birthdate"),
+  quantityInput: document.getElementById("quantity"),
+  locationInputs: document.querySelectorAll(".checkbox-location"),
+  conditionInput: document.getElementById("checkbox1")
 };
-
 
 //TODO: Page object
 
@@ -55,6 +60,7 @@ page.firstNameFormField.addEventListener("focusout", checkFirstNameField);
 page.lastNameFormField.addEventListener("focusout", checkLastNameField);
 page.emailFormField.addEventListener("focusout", checkEmailField);
 page.birthdateFormField.addEventListener("focusout", checkBirthDateField);
+page.quantityField.addEventListener("focusout", checkQuantityField);
 
 
 function checkFirstNameField() {
@@ -92,6 +98,32 @@ function checkBirthDateField() {
   formErrorManagement(page.birthdateFormField, errorState ? "true" : "false");
 }
 
+function checkQuantityField(){
+  let errorState = page.quantityInput.value && page.quantityInput.value >= 0 ? "false" : "true";
+
+  formErrorManagement(page.quantityField, errorState);
+}
+
+function checkLocationInput(){
+
+  isOneChecked = 0;
+  for (const location of page.locationInputs) {
+    if (location.checked){
+      isOneChecked = 1;
+    }
+  }
+
+  let errorState = isOneChecked ? "false" : "true";
+
+  formErrorManagement(page.locationField, errorState);
+}
+
+function checkCondition(){
+  let errorState = page.conditionInput.checked ? "false" : "true";
+
+  formErrorManagement(page.conditionField, errorState);
+}
+
 function formErrorManagement(formElement, state) {
   formElement.setAttribute("data-error-visible", state);
 }
@@ -103,6 +135,9 @@ function validateForm() {
   checkLastNameField();
   checkEmailField();
   checkBirthDateField();
+  checkQuantityField();
+  checkLocationInput();
+  checkCondition();
 
   console.log('test');
   return false;
