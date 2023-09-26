@@ -137,6 +137,28 @@ main {
   font-family: var(--font-slab);
 }
 
+/* Confirmation message */
+
+.confirmation-message {
+  width: 100%;
+  background-color: #279e7a;
+  text-align: center;
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 800;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.confirmation-message-visible {
+  animation-name: confirmation-message-in;
+  animation-duration: 1000ms;
+  animation-fill-mode: forwards;
+}
+
 /* Modal form */
 
 .button {
@@ -548,3 +570,10 @@ footer {
   }
 }
 
+@keyframes confirmation-message-in {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}

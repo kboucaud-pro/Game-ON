@@ -13,7 +13,11 @@ const page = {
   modalbg: document.querySelector(".bground"),
   modalBtn: document.querySelectorAll(".modal-btn"),
   formData: document.querySelectorAll(".formData"),
+  form: document.getElementById("inscription-form"),
   modalCloseButton: document.querySelectorAll(".close"),
+
+  //Confirmation message
+  confirmationMessage: document.querySelector(".confirmation-message"),
 
   //Form fields
   firstNameFormField: document.querySelector(".first"),
@@ -34,21 +38,25 @@ const page = {
   conditionInput: document.getElementById("checkbox1")
 };
 
-//TODO: Page object
-
 // launch modal event
 page.modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // cross close modal
 page.modalCloseButton.forEach((btn) => btn.addEventListener("click", closeModal));
 
-// launch modal form
+/**
+ * Open form modal
+ * @returns
+ */
 function launchModal() {
   page.modalbg.classList.remove("modal-out");
   page.modalbg.classList.add("modal-in");
 }
 
-// close modal function
+/**
+ * Close modal
+ * @returns
+ */
 function closeModal() {
   page.modalbg.classList.add("modal-out");
   setTimeout(function () {
@@ -62,27 +70,45 @@ page.emailFormField.addEventListener("focusout", checkEmailField);
 page.birthdateFormField.addEventListener("focusout", checkBirthDateField);
 page.quantityField.addEventListener("focusout", checkQuantityField);
 
-
+/**
+ * Check FirstName
+ * @returns 
+ */
 function checkFirstNameField() {
   let errorState = page.firstNameInput.textLength <= 2 ? "true" : "false";
 
   formErrorManagement(page.firstNameFormField, errorState);
+  return errorState;
 }
 
+/**
+ * Check LastName
+ * @returns 
+ */
 function checkLastNameField() {
   let errorState = page.lastNameInput.textLength <= 2 ? "true" : "false";
 
   formErrorManagement(page.lastNameFormField, errorState);
+  return errorState;
 }
 
+/**
+ * Check email
+ * @returns 
+ */
 function checkEmailField() {
   let emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
 
-  let errorState = emailRegex.test(page.emailInput) ? "false" : "true";
+  let errorState = emailRegex.test(page.emailInput.value) ? "false" : "true";
 
   formErrorManagement(page.emailFormField, errorState);
+  return errorState;
 }
 
+/**
+ * Check validity of birthdate
+ * @returns 
+ */
 function checkBirthDateField() {
   let birthdateEmail = /^\d{4}-\d{2}-\d{2}$/;//Verif si pas dans le futur
 
@@ -96,14 +122,24 @@ function checkBirthDateField() {
   }
 
   formErrorManagement(page.birthdateFormField, errorState ? "true" : "false");
+  return errorState ? "true" : "false";
 }
 
+/**
+ * Check if a positive number is input
+ * @returns 
+ */
 function checkQuantityField(){
   let errorState = page.quantityInput.value && page.quantityInput.value >= 0 ? "false" : "true";
 
   formErrorManagement(page.quantityField, errorState);
+  return errorState;
 }
 
+/**
+ * check if one location is checked
+ * @returns
+ */
 function checkLocationInput(){
 
   isOneChecked = 0;
@@ -116,29 +152,56 @@ function checkLocationInput(){
   let errorState = isOneChecked ? "false" : "true";
 
   formErrorManagement(page.locationField, errorState);
+  return errorState;
 }
 
+/**
+ * Check CGU
+ * @returns 
+ */
 function checkCondition(){
   let errorState = page.conditionInput.checked ? "false" : "true";
 
   formErrorManagement(page.conditionField, errorState);
+  return errorState;
 }
 
+/**
+ * Make error appear or disappear for form
+ * @param {*} formElement 
+ * @param {string} state 
+ */
 function formErrorManagement(formElement, state) {
   formElement.setAttribute("data-error-visible", state);
 }
 
-//validate form
+/**
+ * Inscription validation form
+ * @returns bool
+ */
 function validateForm() {
 
-  checkFirstNameField();
-  checkLastNameField();
-  checkEmailField();
-  checkBirthDateField();
-  checkQuantityField();
-  checkLocationInput();
-  checkCondition();
+  let isErrors = false;
 
-  console.log('test');
+  if (checkFirstNameField() == "true"
+  || checkLastNameField() == "true"
+  || checkEmailField() == "true"
+  || checkBirthDateField() == "true"
+  || checkQuantityField() == "true"
+  || checkLocationInput() == "true"
+  || checkCondition() == "true"){
+    isErrors = true;
+  }
+
+  if (isErrors){
+    return false;
+  }
+
+  closeModal();
+  page.confirmationMessage.classList.add("confirmation-message-visible");
+
+  //Send form with AJAX
+
+  page.form.reset();
   return false;
 }
