@@ -110,7 +110,7 @@ function checkEmailField() {
  * @returns 
  */
 function checkBirthDateField() {
-  let birthdateEmail = /^\d{4}-\d{2}-\d{2}$/;//Verif si pas dans le futur
+  let birthdateEmail = /^\d{4}-\d{2}-\d{2}$/;
 
   let errorState = birthdateEmail.test(page.birthdateInput.value) ? false : true;
   if (!errorState) {
@@ -181,19 +181,18 @@ function formErrorManagement(formElement, state) {
  */
 function validateForm() {
 
-  let isErrors = false;
+  let isErrors = 0;
 
-  if (checkFirstNameField() == "true"
-  || checkLastNameField() == "true"
-  || checkEmailField() == "true"
-  || checkBirthDateField() == "true"
-  || checkQuantityField() == "true"
-  || checkLocationInput() == "true"
-  || checkCondition() == "true"){
-    isErrors = true;
-  }
+  //Check each field to display each error
+  isErrors += checkFirstNameField() == "true" ? 1 : 0;
+  isErrors += checkLastNameField() == "true" ? 1 : 0;
+  isErrors += checkEmailField() == "true" ? 1 : 0;
+  isErrors += checkBirthDateField() == "true" ? 1 : 0;
+  isErrors += checkQuantityField() == "true" ? 1 : 0;
+  isErrors += checkLocationInput() == "true" ? 1 : 0;
+  isErrors += checkCondition() == "true" ? 1 : 0;
 
-  if (isErrors){
+  if (isErrors > 0){
     return false;
   }
 
