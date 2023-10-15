@@ -1,0 +1,4 @@
+starterOnly/node_modules
+.DS_Store
+
+starterOnly/package-lock.json

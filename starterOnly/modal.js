@@ -97,7 +97,7 @@ function checkLastNameField() {
  * @returns 
  */
 function checkEmailField() {
-  let emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
+  let emailRegex = /^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
 
   let errorState = emailRegex.test(page.emailInput.value) ? "false" : "true";
 
@@ -142,7 +142,7 @@ function checkQuantityField(){
  */
 function checkLocationInput(){
 
-  isOneChecked = 0;
+  let isOneChecked = 0;
   for (const location of page.locationInputs) {
     if (location.checked){
       isOneChecked = 1;
